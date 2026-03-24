@@ -81,8 +81,9 @@ npx bmad-method install \
   -y
 
 echo ""
-echo "BMAD installed. Opening Claude..."
+echo "BMAD installed. Opening Claude with Party Mode..."
+echo "Note: If Claude asks whether you trust this folder, select Yes."
 echo ""
 
-# Open Claude in the project directory
-claude
+# Open Claude and kick off Party Mode automatically
+claude "/bmad-party-mode"
