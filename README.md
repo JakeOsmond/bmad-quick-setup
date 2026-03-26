@@ -11,9 +11,10 @@ bmad my-project-name
 That single command will:
 
 1. Create a project folder
-2. Install BMAD (Agile AI-Driven Development) with sensible defaults
-3. Auto-detect your name from your Mac username
-4. Open Claude Code and launch Party Mode automatically
+2. Let you choose between **Claude Code** or **Codex (OpenAI)** as your AI coding tool
+3. Install BMAD (Agile AI-Driven Development) with sensible defaults
+4. Auto-detect your name from your Mac username
+5. Open your chosen tool and launch Party Mode automatically
 
 You'll be greeted by a full team of AI agents ready to help you build software — a Business Analyst, Product Manager, UX Designer, Architect, Developer, QA Engineer, and more.
 
@@ -35,12 +36,18 @@ More info: [brew.sh](https://brew.sh)
 brew install node
 ```
 
-### 3. Claude Code CLI
+### 3. An AI Coding Tool (one of the following)
 
-You need a [Claude account](https://claude.ai) with an active subscription, then:
+**Claude Code** — requires a [Claude account](https://claude.ai) with an active subscription:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
+```
+
+**Codex (OpenAI)** — requires an [OpenAI account](https://platform.openai.com):
+
+```bash
+npm install -g @openai/codex
 ```
 
 ## Install

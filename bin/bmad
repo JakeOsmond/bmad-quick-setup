@@ -4,7 +4,7 @@
 # One command to create a project, install BMAD, and open Claude.
 # Usage: bmad <project-name>
 
-VERSION="1.1.0"
+VERSION="1.2.0"
 
 if [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
   echo "bmad-quick-setup $VERSION"
@@ -56,9 +56,31 @@ if ! command -v node &> /dev/null; then
   exit 1
 fi
 
-if ! command -v claude &> /dev/null; then
-  echo "Error: Claude Code CLI is not installed."
-  echo "Install it with: npm install -g @anthropic-ai/claude-code"
+# Choose AI coding tool
+echo "Which AI coding tool do you want to use?"
+echo ""
+echo "  1) Claude Code"
+echo "  2) Codex (OpenAI)"
+echo ""
+printf "Enter choice [1]: "
+read -r TOOL_CHOICE
+
+case "$TOOL_CHOICE" in
+  2)
+    TOOL_ID="codex"
+    TOOL_CMD="codex"
+    TOOL_INSTALL="npm install -g @openai/codex"
+    ;;
+  *)
+    TOOL_ID="claude-code"
+    TOOL_CMD="claude"
+    TOOL_INSTALL="npm install -g @anthropic-ai/claude-code"
+    ;;
+esac
+
+if ! command -v "$TOOL_CMD" &> /dev/null; then
+  echo "Error: $TOOL_CMD is not installed."
+  echo "Install it with: $TOOL_INSTALL"
   exit 1
 fi
 
@@ -66,14 +88,15 @@ fi
 mkdir -p "$PROJECT_NAME"
 cd "$PROJECT_NAME" || exit 1
 
-echo "Installing BMAD..."
+echo ""
+echo "Installing BMAD with $TOOL_ID..."
 echo ""
 
-# Install BMAD with all defaults
+# Install BMAD with selected tool
 npx bmad-method install \
   --directory "." \
   --modules "bmm" \
-  --tools "claude-code" \
+  --tools "$TOOL_ID" \
   --user-name "$USER_FIRST_NAME" \
   --communication-language "English" \
   --document-output-language "English" \
@@ -81,9 +104,9 @@ npx bmad-method install \
   -y
 
 echo ""
-echo "BMAD installed. Opening Claude with Party Mode..."
-echo "Note: If Claude asks whether you trust this folder, select Yes."
+echo "BMAD installed. Opening $TOOL_CMD with Party Mode..."
+echo "Note: If $TOOL_CMD asks whether you trust this folder, select Yes."
 echo ""
 
-# Open Claude and kick off Party Mode automatically
-claude "/bmad-party-mode"
+# Open the selected tool and kick off Party Mode automatically
+"$TOOL_CMD" "/bmad-party-mode"
